@@ -23,7 +23,7 @@ class Banner extends Base{
 
     public function edit(){
         $model=$this->checkId();
-        if(request()->isPost()){
+        if(request()->isAjax()){
             $data = validate('Banner')->scene('update')->go_check();
             return json(BannerModel::edit($data));
         }

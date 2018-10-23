@@ -1,0 +1,77 @@
+{extend name='common/layout'}
+{block name="css"}
+<style>
+    td{
+        display:table-cell;!important;
+        vertical-align:middle!important;
+    }
+</style>
+{/block}
+{block name="content"}
+            <div class="page-breadcrumbs">
+                <ul class="breadcrumb">
+                    <li>
+                        <a href="{:url('index/index')}">首页</a>
+                    </li>
+                    <li class="active">案例列表</li>
+                </ul>
+            </div>
+            <!-- /Page Breadcrumb -->
+
+            <!-- Page Body -->
+            <div class="page-body">
+
+                <button type="button" tooltip="添加案例" class="btn btn-sm btn-azure btn-addon" onClick="javascript:window.location.href = '{:url(\'example/add\')}'"> <i class="fa fa-plus"></i> 添加案例
+                </button>
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-xs-12">
+                        <div class="widget">
+                            <div class="widget-body">
+                                <div class="flip-scroll">
+                                    <table class="table table-bordered table-hover">
+                                        <thead class="">
+                                        <tr>
+                                            <th class="text-center">序号</th>
+                                            <th class="text-center" width="30%">案例图预览</th>
+                                            <th class="text-center">案例名称</th>
+                                            <th class="text-center">创建时间</th>
+                                            <th class="text-center">更新时间</th>
+                                            <th class="text-center">状态</th>
+                                            <th class="text-center">操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php foreach($examples as $k=>$example):?>
+                                        <tr>
+                                            <td align="center">{$k+1}</td>
+                                            <td align="center"><img width="60%" src="{$example->picture}"></td>
+                                            <td align="center">{$example->name}</td>
+                                            <td align="center">{$example->create_time}</td>
+                                            <td align="center">{$example->update_time}</td>
+                                            <td align="center">
+                                                <?php echo 0!=$example->status?'启用中':'停用中';?>
+                                            </td>
+                                            <td align="center">
+                                                <a href="javascript:void(0);" class="btn btn-palegreen btn-sm shiny" onclick="ajaxChangeStatus(this)" data-url="{:url('example/changeStatus','id='.$example->id)}"><i class="fa fa-eraser">修改状态</i></a>
+                                                <a href="{:url('example/edit','id='.$example->id)}" class="btn btn-primary btn-sm shiny">
+                                                    <i class="fa fa-edit"></i> 编辑
+                                                </a>
+                                                <a href="javascript:void(0);" onClick="ajaxDelete(this)" data-url="{:url('example/delete','id='.$example->id)}" class="btn btn-danger btn-sm shiny">
+                                                    <i class="fa fa-trash-o"></i> 删除
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <?php endforeach;?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /Page Body -->
+{/block}
