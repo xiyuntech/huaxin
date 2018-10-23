@@ -22,6 +22,7 @@ class Article extends Base{
 
 
     protected $scene=[
-        'create'=>['title','cover','content']
+        'create'=>['title','cover','content'],
+        'update'=>['title','cover','content'],
     ];
 }

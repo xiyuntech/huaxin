@@ -35,9 +35,9 @@
                                 <th class="text-center" width="30%">图片预览</th>
                                 <th class="text-center">跳转地址</th>
                                 <th class="text-center">描述</th>
-                                <th class="text-center">状态</th>
                                 <th class="text-center">创建时间</th>
                                 <th class="text-center">更新时间</th>
+                                <th class="text-center">状态</th>
                                 <th class="text-center">操作</th>
                             </tr>
                             </thead>
@@ -53,13 +53,13 @@
                                     <?php echo empty($banner->descr)?'暂无':$banner->descr;?>
                                 </td>
                                 <td align="center">
-                                    <?php echo 0!=$banner->status?'启用中':'停用中';?>
-                                </td>
-                                <td align="center">
                                    {$banner->create_time}
                                 </td>
                                 <td align="center">
                                     {$banner->update_time}
+                                </td>
+                                <td align="center">
+                                    <?php echo 0!=$banner->status?'启用中':'停用中';?>
                                 </td>
                                 <td align="center">
                                     <a href="javascript:void(0);" class="btn btn-palegreen btn-sm shiny" onclick="ajaxChangeStatus(this)" data-url="{:url('banner/changeStatus','id='.$banner->id)}"><i class="fa fa-eraser">修改状态</i></a>

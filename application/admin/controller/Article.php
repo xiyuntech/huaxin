@@ -19,4 +19,13 @@ class Article extends Base{
         }
         return $this->fetch('add');
     }
+
+    public function edit(){
+        $article=$this->checkId();
+        if(request()->isAjax()){
+            $data=validate('article')->scene('update')->go_check();
+            return json(ArticleModel::edit($data));
+        }
+        return $this->fetch('edit',compact('article'));
+    }
 }

@@ -22,7 +22,7 @@ class Base extends Model{
 
     public static function edit($post){
         $id=isset($post['id'])?$post['id']:0;
-        $model=self::get($id);
+        $model=self::where('status','<>','-1')->where('id','=',$id)->find();
         if(!$model){
             return fail('主键信息不正确');
         }

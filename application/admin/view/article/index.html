@@ -25,9 +25,9 @@
                                         <tr>
                                             <th class="text-center">序号</th>
                                             <th class="text-center">文章标题</th>
-                                            <th class="text-center">状态</th>
                                             <th class="text-center">创建时间</th>
                                             <th class="text-center">更新时间</th>
+                                            <th class="text-center">状态</th>
                                             <th class="text-center">操作</th>
                                         </tr>
                                         </thead>
@@ -36,11 +36,11 @@
                                         <tr>
                                             <td align="center">{$k+1}</td>
                                             <td align="center">{$article->title}</td>
+                                            <td align="center">{$article->create_time}</td>
+                                            <td align="center">{$article->update_time}</td>
                                             <td align="center">
                                                 <?php echo 0!=$article->status?'启用中':'停用中';?>
                                             </td>
-                                            <td align="center">{$article->create_time}</td>
-                                            <td align="center">{$article->update_time}</td>
                                             <td align="center">
                                                 <a href="javascript:void(0);" class="btn btn-palegreen btn-sm shiny" onclick="ajaxChangeStatus(this)" data-url="{:url('article/changeStatus','id='.$article->id)}"><i class="fa fa-eraser">修改状态</i></a>
                                                 <a href="{:url('article/edit','id='.$article->id)}" class="btn btn-primary btn-sm shiny">
