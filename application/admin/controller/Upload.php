@@ -20,4 +20,19 @@ class Upload extends Base{
             }
         }
     }
+
+
+    public function editorUpload(){
+        $file = request()->file('editor');
+        if($file){
+            $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
+            if($info){
+                $savePath=str_replace('\\','/',$info->getSaveName());
+                return json(['errno'=>0,'data'=>['/uploads/'.$savePath]]);
+            }else{
+                return json(['errno'=>1,'message'=>'上传图片失败，请重试']);
+
+            }
+        }
+    }
 }
