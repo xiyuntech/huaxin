@@ -1,4 +1,12 @@
 {extend name="common/layout"}
+{block name="css"}
+<style>
+    td{
+        display:table-cell;!important;
+        vertical-align:middle!important;
+    }
+</style>
+{/block}
 {block name="content"}
             <div class="page-breadcrumbs">
                 <ul class="breadcrumb">
@@ -23,48 +31,48 @@
                                     <table class="table table-bordered table-hover">
                                         <thead class="">
                                         <tr>
-                                            <th class="text-center">ID</th>
-                                            <th class="text-center">用户名称</th>
+                                            <th class="text-center">序号</th>
+                                            <th class="text-center" width="10%">产品图片</th>
+                                            <th class="text-center">产品名称</th>
+                                            <th class="text-center">服务分类</th>
+                                            <th class="text-center">检测分类</th>
+                                            <th class="text-center">规格参数</th>
+                                            <th class="text-center">更新时间</th>
+                                            <th class="text-center">状态</th>
                                             <th class="text-center">操作</th>
                                         </tr>
                                         </thead>
                                         <tbody>
+                                        <?php foreach($products as $k=>$v):?>
                                         <tr>
-                                            <td align="center">6</td>
-                                            <td align="center">test</td>
+                                            <td align="center">{$k+1}</td>
+                                            <td align="center"><img width="50%" src="{$v->img}"></td>
+                                            <td align="center">{$v->name}</td>
+                                            <td align="center">{$v->getCategory->name}</td>
+                                            <td align="center"><?php echo config('admin.product_type')[$v['type_id']];?></td>
                                             <td align="center">
-                                                <a href="/admin/user/edit/id/6.html" class="btn btn-primary btn-sm shiny">
+                                                <?php $formats=$v->getFormat;
+                                                $str='';
+                                                foreach($formats as $f){
+                                                    $str.='规格名称：'.$f['format_name'].'&nbsp;&nbsp;&nbsp;&nbsp;规格价格：¥'.$f['format_price'].'<br>';
+                                                }
+                                                echo $str;?>
+                                            </td>
+                                            <td align="center">{$v->update_time}</td>
+                                            <td align="center">
+                                                <?php echo 0!=$v->status?'启用中':'停用中';?>
+                                            </td>
+                                            <td align="center">
+                                                <a href="javascript:void(0);" class="btn btn-palegreen btn-sm shiny" onclick="ajaxChangeStatus(this)" data-url="{:url('product/changeStatus','id='.$v->id)}"><i class="fa fa-eraser">修改状态</i></a>
+                                                <a href="{:url('product/edit','id='.$v->id)}" class="btn btn-primary btn-sm shiny">
                                                     <i class="fa fa-edit"></i> 编辑
                                                 </a>
-                                                <a href="#" onClick="warning('确实要删除吗', '/admin/user/del/id/6.html')" class="btn btn-danger btn-sm shiny">
+                                                <a href="javascript:void(0);" onClick="ajaxDelete(this)" data-url="{:url('product/delete','id='.$v->id)}" class="btn btn-danger btn-sm shiny">
                                                     <i class="fa fa-trash-o"></i> 删除
                                                 </a>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td align="center">7</td>
-                                            <td align="center">aaaaaa</td>
-                                            <td align="center">
-                                                <a href="/admin/user/edit/id/7.html" class="btn btn-primary btn-sm shiny">
-                                                    <i class="fa fa-edit"></i> 编辑
-                                                </a>
-                                                <a href="#" onClick="warning('确实要删除吗', '/admin/user/del/id/7.html')" class="btn btn-danger btn-sm shiny">
-                                                    <i class="fa fa-trash-o"></i> 删除
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td align="center">8</td>
-                                            <td align="center">bbb</td>
-                                            <td align="center">
-                                                <a href="/admin/user/edit/id/8.html" class="btn btn-primary btn-sm shiny">
-                                                    <i class="fa fa-edit"></i> 编辑
-                                                </a>
-                                                <a href="#" onClick="warning('确实要删除吗', '/admin/user/del/id/8.html')" class="btn btn-danger btn-sm shiny">
-                                                    <i class="fa fa-trash-o"></i> 删除
-                                                </a>
-                                            </td>
-                                        </tr>
+                                        <?php endforeach;?>
                                         </tbody>
                                     </table>
                                 </div>

@@ -1,14 +1,25 @@
 {extend name="common/layout"}
+{block name="css"}
+<link href="__PLUGIN__/uploadify/uploadify.css"/>
+<style>
+    .format_button{
+        color:red;
+        padding-right: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+</style>
+{/block}
 {block name="content"}
             <div class="page-breadcrumbs">
                 <ul class="breadcrumb">
                     <li>
-                        <a href="#">系统</a>
+                        <a href="{:url('index/index')}">首页</a>
                     </li>
                     <li>
-                        <a href="#">用户管理</a>
+                        <a href="{:url('product/index')}">检测产品列表</a>
                     </li>
-                    <li class="active">添加用户</li>
+                    <li class="active">添加检测产品</li>
                 </ul>
             </div>
             <!-- /Page Breadcrumb -->
@@ -20,30 +31,71 @@
                     <div class="col-lg-12 col-sm-12 col-xs-12">
                         <div class="widget">
                             <div class="widget-header bordered-bottom bordered-blue">
-                                <span class="widget-caption">新增用户</span>
+                                <span class="widget-caption">添加检测产品<span style="color: red;">（注意：设置flash允许）</span>
                             </div>
                             <div class="widget-body">
                                 <div id="horizontal-form">
-                                    <form class="form-horizontal" role="form" action="" method="post">
+                                    <form class="form-horizontal" role="form" action="" method="post" id="form">
                                         <div class="form-group">
-                                            <label for="username" class="col-sm-2 control-label no-padding-right">用户名</label>
+                                            <label class="col-sm-2 control-label no-padding-right">服务分类：</label>
                                             <div class="col-sm-6">
-                                                <input class="form-control" id="username" placeholder="" name="username" required="" type="text">
+                                                <select name="cate_id">
+                                                    <option value="">--请选择--</option>
+                                                    <?php foreach($cates as $k=>$v):?>
+                                                    <option value="{$v['id']}">{$v['name']}</option>
+                                                    <?php endforeach;?>
+                                                </select>
+                                            </div>
+                                            <p class="help-block col-sm-4 red">* 必选</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label no-padding-right">检测类型：</label>
+                                            <div class="col-sm-6">
+                                                <select name="type_id">
+                                                    <option value="">--请选择--</option>
+                                                    <?php foreach(config('admin.product_type') as $k=>$v):?>
+                                                    <option value="{$k}">{$v}</option>
+                                                    <?php endforeach;?>
+                                                </select>
+                                            </div>
+                                            <p class="help-block col-sm-4 red">* 必选</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label no-padding-right">产品名称：</label>
+                                            <div class="col-sm-6">
+                                                <input class="form-control"  placeholder="" name="name" required="" type="text">
                                             </div>
                                             <p class="help-block col-sm-4 red">* 必填</p>
                                         </div>
-
                                         <div class="form-group">
-                                            <label for="group_id" class="col-sm-2 control-label no-padding-right">用户角色</label>
+                                            <label  class="col-sm-2 control-label no-padding-right">产品图片：</label>
                                             <div class="col-sm-6">
-                                                <select name="group_id" style="width: 100%;">
-                                                    <option selected="selected" value="8">测试</option>
-                                                </select>
+                                                <input  type="file" id="img">
+                                            </div>
+                                            <p class="help-block col-sm-4 red">* 必须上传</p>
+                                        </div>
+                                        <div style="display: none;" id="show" class="form-group">
+                                            <label  class="col-sm-2 control-label no-padding-right">产品图片预览：</label>
+                                            <div class="col-sm-6">
+                                                <img src="">
+                                                <input type="hidden" name="img">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label no-padding-right"><span class="format_button" onclick="format_click(this)">[+]</span>规格设置：</label>
+                                            <div class="col-sm-3"><input class="form-control"  placeholder="规格名称" name="format_name[]" type="text"></div>
+                                            <div class="col-sm-2"><input class="form-control"  placeholder="价格" name="format_price[]"  type="text"></div>
+                                            <p class="help-block col-sm-4 red">* 必填</p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label no-padding-right">产品描述：</label>
+                                            <div class="col-sm-6">
+                                                <textarea class="form-control" name="descr"  ></textarea>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-sm-offset-2 col-sm-10">
-                                                <button type="submit" class="btn btn-default">保存信息</button>
+                                                <button type="submit" class="btn btn-default">添加产品</button>
                                             </div>
                                         </div>
                                     </form>
@@ -55,4 +107,29 @@
 
             </div>
             <!-- /Page Body -->
+{/block}
+{block name="js"}
+<script src="__PLUGIN__/uploadify/jquery.uploadify.min.js"></script>
+<script>
+    UPLOAD_URL="{:url('upload/img')}";
+    POST_URL="{:url('product/add')}";
+    function format_click($this){
+        obj=$($this);
+        div=obj.parent().parent();
+        if(obj.text()=='[+]'){
+            new_div=div.clone();
+            new_div.find('.format_button').text('[-]');
+            new_div.insertAfter(div);
+        }else{
+            div.remove();
+        }
+    }
+    $(function(){
+        uploadImg($('#img'),UPLOAD_URL,'产品图片上传');
+        $('#img-button').height(20);
+        $('#img-button').css({'line-height':'25px'});
+        ajaxPost($('#form'),POST_URL);
+
+    });
+</script>
 {/block}
