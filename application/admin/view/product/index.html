@@ -52,11 +52,16 @@
                                             <td align="center"><?php echo config('admin.product_type')[$v['type_id']];?></td>
                                             <td align="center">
                                                 <?php $formats=$v->getFormat;
-                                                $str='';
-                                                foreach($formats as $f){
-                                                    $str.='规格名称：'.$f['format_name'].'&nbsp;&nbsp;&nbsp;&nbsp;规格价格：¥'.$f['format_price'].'<br>';
+                                                if($formats){
+                                                    $str='';
+                                                    foreach($formats as $f){
+                                                        $str.='规格名称：'.$f['format_name'].'&nbsp;&nbsp;&nbsp;&nbsp;规格价格：¥'.$f['format_price'].'<br>';
+                                                    }
+                                                    echo $str;
+                                                }else{
+                                                    echo '暂无';
                                                 }
-                                                echo $str;?>
+                                                ?>
                                             </td>
                                             <td align="center">{$v->update_time}</td>
                                             <td align="center">

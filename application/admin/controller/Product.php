@@ -22,4 +22,22 @@ class Product extends Base{
         $cates=CategoryModel::where('status','<>','-1')->field('id,name')->order(['create_time'=>'desc'])->select();
         return $this->fetch('add',compact('cates'));
     }
+
+
+    public function edit(){
+        $product=$this->checkId();
+        if(request()->isAjax()){
+            $data=validate('product')->scene('update')->go_check();
+            return json(ProductModel::editProduct($data));
+        }
+        $cates=CategoryModel::where('status','<>','-1')->field('id,name')->order(['create_time'=>'desc'])->select();
+        return $this->fetch('edit',compact('cates','product'));
+    }
+
+
+    public function delete()
+    {
+        $product=$this->checkId();
+        return json($product->deleteProduct());
+    }
 }

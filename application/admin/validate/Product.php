@@ -36,6 +36,7 @@ class Product extends Base{
 
 
     protected $scene=[
-        'create'=>['cate_id','type_id','name','img']
+        'create'=>['cate_id','type_id','name','img'],
+        'update'=>['cate_id','type_id','name','img','id']
     ];
 }
