@@ -39,7 +39,7 @@ class Product extends Base{
             return fail('修改产品失败，请稍后重试');
         }
     }
-    
+
     protected static function checkFormatParams($data){
         $format_name=isset($data['format_name'])?$data['format_name']:null;
         $format_price=isset($data['format_price'])?$data['format_price']:null;

@@ -5,7 +5,7 @@ namespace app\common\model;
 use think\Model;
 
 class Base extends Model{
-
+    const IS_SHOW=1;
     protected  $autoWriteTimestamp=true;
 
 

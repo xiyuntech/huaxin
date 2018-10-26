@@ -29,4 +29,15 @@ class Info extends Base{
             }
         }
     }
+
+
+    public static function getAboutUs(){
+        $info = self::where('status',1)
+            ->field('company_name,address,introduce,concat_phone,logo')
+            ->order(['create_time'=>'asc'])
+            ->limit(0,1)
+            ->find();
+        $info['logo']=request()->domain().$info['logo'];
+        return $info;
+    }
 }
