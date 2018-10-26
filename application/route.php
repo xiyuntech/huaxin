@@ -23,5 +23,17 @@ Route::get('api/:version/banners/get','api/:version.Banner/getBanners');
 //关于我们
 Route::get('api/:version/about/us','api/:version.Company/getAboutUs');
 
-//获取工程案例
+//获取工程案例列表
 Route::get('api/:version/examples/get','api/:version.Example/getExamples');
+
+//获取咨询列表
+Route::get('api/:version/articles/get','api/:version.Article/getArticles');
+//咨询详情
+Route::get('api/:version/article/get','api/:version.Article/getArticleDetail');
+
+
+
+//培训列表
+Route::get('api/:version/trains/get','api/:version.Train/getTrains');
+//培训详情
+Route::get('api/:version/train/get','api/:version.Train/getTrainDetail');
