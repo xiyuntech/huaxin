@@ -37,3 +37,16 @@ Route::get('api/:version/article/get','api/:version.Article/getArticleDetail');
 Route::get('api/:version/trains/get','api/:version.Train/getTrains');
 //培训详情
 Route::get('api/:version/train/get','api/:version.Train/getTrainDetail');
+
+
+
+//新增委托单位
+Route::post('api/:version/unit/add','api/:version.User/addUnit');
+//修改委托单位
+Route::post('api/:version/unit/edit','api/:version.User/updateUnit');
+//删除委托单位
+Route::post('api/:version/unit/delete','api/:version.User/deleteUnit');
+//选中委托单位
+Route::post('api/:version/unit/check','api/:version.User/checkUnit');
+//委托单位列表
+Route::get('api/:version/units/get','api/:version.User/getUnits');
