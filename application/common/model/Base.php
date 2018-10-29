@@ -34,4 +34,14 @@ class Base extends Model{
         }
 
     }
+
+    //过滤前端数组的指定字段
+    protected static function filters($data,$filters=[]){
+        foreach ($filters as $v) {
+            if(isset($data[$v])){
+                unset($data[$v]);
+            }
+        }
+        return $data;
+    }
 }

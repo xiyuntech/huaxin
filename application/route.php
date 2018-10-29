@@ -50,3 +50,11 @@ Route::post('api/:version/unit/delete','api/:version.User/deleteUnit');
 Route::post('api/:version/unit/check','api/:version.User/checkUnit');
 //委托单位列表
 Route::get('api/:version/units/get','api/:version.User/getUnits');
+
+
+//发票设置
+Route::get('api/:version/invoice/setting','api/:version.User/createOrUpdateInvoice');
+Route::post('api/:version/invoice/setting','api/:version.User/createOrUpdateInvoice');
+
+//培训报名
+Route::post('api/:version/train/enroll','api/:version.User/enrollTrain');

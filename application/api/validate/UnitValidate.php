@@ -38,10 +38,5 @@ class UnitValidate extends BaseValidate{
         'create'=>['name','phone','company_name','address'],
         'update'=>['name','phone','company_name','address','id']
     ];
-    protected function checkPhone($value){
-        if(!preg_match("/^1[34578]\d{9}$/", $value)){
-            return false;
-        }
-        return true;
-    }
+
 }

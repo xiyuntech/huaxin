@@ -15,6 +15,12 @@ class BaseValidate extends Validate{
         return true;
     }
 
+    protected function checkPhone($value){
+        if(!preg_match("/^1[34578]\d{9}$/", $value)){
+            return false;
+        }
+        return true;
+    }
 
     protected function isPositiveInteger($value, $rule='', $data='', $field='')
     {

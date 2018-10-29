@@ -11,6 +11,7 @@ class Unit extends Base{
 
 
     public static function addUnit($data,$uid){
+        $data=self::filters($data,array('id','uid'));
         $data['uid']=$uid;
         try{
             $unit=self::create($data,true);
@@ -23,6 +24,8 @@ class Unit extends Base{
 
 
     public static function updateUnit($data,$uid){
+        //过滤掉数组的uid字段
+        $data=self::filters($data,array('uid'));
         $id=isset($data['id'])?$data['id']:0;
         $unit=self::where(['status'=>1,'id'=>$id,'uid'=>$uid])->find();
         if(!$unit){
@@ -57,6 +60,8 @@ class Unit extends Base{
             throw new UserException(array('code'=>400,'errorCode'=>4005));
         }
         try{
+            //将其他选择的置为未选择
+            self::where(['uid'=>$uid,'checked'=>1,'status'=>1])->update(['checked'=>0]);
             $unit->checked=1;
             $unit->save();
             return ['checked'=>$unit->id];
