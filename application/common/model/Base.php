@@ -6,6 +6,7 @@ use think\Model;
 
 class Base extends Model{
     const IS_SHOW=1;
+    const IS_DELETE=-1;
     protected  $autoWriteTimestamp=true;
 
 

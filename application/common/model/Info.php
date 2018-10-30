@@ -40,4 +40,14 @@ class Info extends Base{
         $info['logo']=request()->domain().$info['logo'];
         return $info;
     }
+
+
+    public static function getAccount(){
+        $info = self::where('status',1)
+            ->field('receive_name,open_name,receive_account')
+            ->order(['create_time'=>'asc'])
+            ->limit(0,1)
+            ->find();
+        return $info;
+    }
 }

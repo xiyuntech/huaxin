@@ -82,11 +82,27 @@ class Product extends Base{
 
     //获取产品的规格信息
     public function getFormat(){
-        return $this->hasMany(Format::class,'product_id','id')->field('format_name,format_price')->where(['status'=>1]);
+        return $this->hasMany(Format::class,'product_id','id')->field('id,format_name,format_price')->where(['status'=>1]);
     }
 
     //获取服务分类
     public function getCategory(){
         return $this->belongsTo(Category::class,'cate_id','id')->field('name');
+    }
+
+    public static function getProducts($cate_id,$type_id,$page,$count){
+        if($count>=20){
+            $count=20;
+        }
+        $products=self::where(['status'=>self::IS_SHOW,'type_id'=>$type_id,'cate_id'=>$cate_id])
+            ->order(['create_time'=>'desc'])
+            ->field('id,name,img,descr')
+            ->limit(($page-1)*$count,$count)
+            ->select();
+        foreach($products as $k=>$product){
+            $products[$k]['img']=request()->domain().$product['img'];
+            $products[$k]['format']=$product->getFormat()->select();
+        }
+        return $products;
     }
 }

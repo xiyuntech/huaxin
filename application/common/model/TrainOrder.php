@@ -33,4 +33,31 @@ class TrainOrder extends Base{
             throw new UserException(array('code'=>500,'errorCode'=>4007));
         }
     }
+
+    public static function getTrains($page,$count,$uid){
+        if($count>=20){
+            $count=20;
+        }
+        $trains=self::where('status','<>',self::IS_DELETE)
+            ->where(['uid'=>$uid])
+            ->field('order_price,status,username,phone,detail,train_id')
+            ->order(['create_time'=>'desc'])
+            ->limit(($page-1)*$count,$count)
+            ->select();
+        $res=[];
+        foreach($trains as $k=>$train){
+            $detail=unserialize($train['detail']);
+            $res[]=array(
+                'price'=>$train['order_price'],
+                'status'=>$train['status'],
+                'username'=>$train['username'],
+                'phone'=>$train['phone'],
+                'train_id'=>$train['train_id'],
+                'train_name'=>$detail['name'],
+                'open_time'=>date('Y-m-d H:i',$detail['begin_time']),
+                'cover'=>request()->domain().$detail['picture']
+            );
+        }
+        return $res;
+    }
 }

@@ -32,6 +32,15 @@ Route::get('api/:version/articles/get','api/:version.Article/getArticles');
 Route::get('api/:version/article/get','api/:version.Article/getArticleDetail');
 
 
+//检测分类列表
+Route::get('api/:version/categories/get','api/:version.Category/getCategories');
+//检测分类详情
+Route::get('api/:version/category/get','api/:version.Category/getCategory');
+//获取分类下的产品
+Route::get('api/:version/products/get','api/:version.Product/getProducts');
+
+
+
 
 //培训列表
 Route::get('api/:version/trains/get','api/:version.Train/getTrains');
@@ -58,3 +67,9 @@ Route::post('api/:version/invoice/setting','api/:version.User/createOrUpdateInvo
 
 //培训报名
 Route::post('api/:version/train/enroll','api/:version.User/enrollTrain');
+//我的培训
+Route::get('api/:version/trains/get','api/:version.User/getTrains');
+//下单
+Route::post('api/:version/order/place','api/:version.Order/placeOrder');
+//我的订单
+Route::get('api/:version/orders/get','api/:version.Order/getOrders');

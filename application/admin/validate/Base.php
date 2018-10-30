@@ -13,4 +13,11 @@ class Base extends Validate{
         }
         return $param;
     }
+
+    protected function checkPhone($value){
+        if(!preg_match("/^1[34578]\d{9}$/", $value)){
+            return false;
+        }
+        return true;
+    }
 }

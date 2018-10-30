@@ -68,4 +68,11 @@ class User extends BaseController{
         $uid=UserToken::getTokenVar('uid');
         return json(TrainOrder::enrollTrain($data,$uid));
     }
+
+    //我的培训
+    public function getTrains($page=1,$count=10){
+        (new PaginationValidate())->goCheck();
+        $uid=UserToken::getTokenVar('uid');
+        return json(TrainOrder::getTrains($page,$count,$uid));
+    }
 }
