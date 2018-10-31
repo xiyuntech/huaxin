@@ -3,6 +3,8 @@
 
 namespace app\common\model;
 
+use think\Db;
+
 class Business extends Base{
 
 
@@ -84,6 +86,24 @@ class Business extends Base{
                 $res[]=$d['id'];
                 $res=array_merge($res,self::_getChildren($data,$d['id']));
             }
+        }
+        return $res;
+    }
+
+
+    public static function getBusinesses(){
+        $res=Db::query("SELECT a.id,a.name,b.name AS child_name,b.cover AS child_cover
+                  FROM business AS a
+                  INNER JOIN business AS b
+                  ON a.id=b.pid WHERE a.pid=:pid AND a.status=1 AND b.status=1
+                  ORDER BY a.create_time DESC",['pid'=>0]);
+        $business=[];
+        foreach($res as $r){
+            $business[$r['name']][]=array('name'=>$r['child_name'],'cover'=>request()->domain().$r['child_cover']);
+        }
+        $res=[];
+        foreach($business as $k=>$b){
+            $res[]=array('parent'=>$k,'children'=>$b);
         }
         return $res;
     }

@@ -32,6 +32,9 @@ Route::get('api/:version/articles/get','api/:version.Article/getArticles');
 Route::get('api/:version/article/get','api/:version.Article/getArticleDetail');
 
 
+//获取业务分类
+Route::get('api/:version/businesses/get','api/:version.Business/getBusinesses');
+
 //检测分类列表
 Route::get('api/:version/categories/get','api/:version.Category/getCategories');
 //检测分类详情
