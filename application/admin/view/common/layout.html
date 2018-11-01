@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>华新后台:{$title}</title>
+    <title>华新后台：{$title}</title>
     <meta name="description" content="Dashboard">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -49,14 +49,15 @@
                                     <img src="__ADMIN__/images/header.jpg">
                                 </div>
                                 <section>
-                                    <h2><span class="profile"><span>admin</span></span></h2>
+                                    <?php $user=session('user','','admin');$user=unserialize($user);?>
+                                    <h2><span class="profile"><span>{$user['username']}</span></span></h2>
                                 </section>
                             </a>
                             <!--Login Area Dropdown-->
                             <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
                                 <li class="username"><a>David Stevenson</a></li>
                                 <li class="dropdown-footer">
-                                    <a href="/admin/user/logout.html">
+                                    <a href="{:url('login/logout')}">
                                         退出登录
                                     </a>
                                 </li>

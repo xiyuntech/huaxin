@@ -41,4 +41,28 @@ class Admin extends Base{
         }
 
     }
+
+
+    public static function LoginIn($data){
+        $username=isset($data['username'])?$data['username']:'';
+        $password=isset($data['password'])?$data['password']:'';
+        $user=self::where('status','<>',-1)->where(['username'=>$username])->find();
+        if(!$user){
+            return fail('用户名不存在');
+        }
+        if($user->status==0){
+            return fail('账号被禁用了 ，请联系超级管理员');
+        }
+        if(md5($password)!==$user->password){
+            return fail('用户名或者密码错误');
+        }
+        self::saveInfoToSession($user);
+        return success('登录成功',[],url('index/index'));
+    }
+
+
+    protected static function saveInfoToSession($user){
+        $res=['uid'=>$user->id,'username'=>$user->username];
+        session('user',serialize($res),'admin');
+    }
 }

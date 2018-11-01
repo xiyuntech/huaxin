@@ -7,8 +7,18 @@ use think\Controller;
 
 class Base extends Controller{
 
+    protected function checkIsLogin(){
+        $user=session('user','','admin');
+        if(!$user){
+            return false;
+        }
+        return true;
+    }
     public function _initialize()
     {
+        if(!$this->checkIsLogin()){
+            $this->redirect('login/login');exit;
+        }
         $this->assign([
             'title'=>$this->title
         ]);
