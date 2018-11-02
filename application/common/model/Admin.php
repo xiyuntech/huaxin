@@ -57,6 +57,7 @@ class Admin extends Base{
             return fail('用户名或者密码错误');
         }
         self::saveInfoToSession($user);
+        self::updateInfo($user);
         return success('登录成功',[],url('index/index'));
     }
 
@@ -64,5 +65,17 @@ class Admin extends Base{
     protected static function saveInfoToSession($user){
         $res=['uid'=>$user->id,'username'=>$user->username];
         session('user',serialize($res),'admin');
+    }
+
+    protected static function updateInfo($user){
+        try{
+            $user->last_login_time=time();
+            $user->last_login_ip=(ip2long(request()->ip()));
+            $user->save();
+            return true;
+        }catch(\Exception $e){
+            //可以记录日志
+            return false;
+        }
     }
 }
