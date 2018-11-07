@@ -17,7 +17,8 @@ class Train extends Base{
             ->limit(($page-1)*$count,$count)
             ->select();
         foreach($trains as $k=>$train){
-            $trains[$k]['picture']=request()->domain().$train['picture'];
+            $trains[$k]['cover']=request()->domain().$train['picture'];
+            unset($trains[$k]['picture']);
         }
         return $trains;
     }
@@ -33,7 +34,8 @@ class Train extends Base{
         if(!$train){
             return [];
         }
-        $train['picture']=request()->domain().$train['picture'];
+        $train['cover']=request()->domain().$train['picture'];
+        unset($train['picture']);
         $train['begin_time']=date('Y-m-d H:i',$train['begin_time']);
         return $train;
     }
