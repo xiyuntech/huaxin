@@ -71,7 +71,7 @@ Route::post('api/:version/invoice/setting','api/:version.User/createOrUpdateInvo
 //培训报名
 Route::post('api/:version/train/enroll','api/:version.User/enrollTrain');
 //我的培训
-Route::get('api/:version/trains/get','api/:version.User/getTrains');
+Route::get('api/:version/trains/my','api/:version.User/getTrains');
 //下单
 Route::post('api/:version/order/place','api/:version.Order/placeOrder');
 //我的订单
